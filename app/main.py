@@ -3,6 +3,10 @@ from services.extraction_service import extract_text_from_pdf, extract_text_from
 from services.summarization_service import summarize_text
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}
+
 
 @app.post("/extract_pdf/")
 async def extract_pdf(file: UploadFile = File(...)):
