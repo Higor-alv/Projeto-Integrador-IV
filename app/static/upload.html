@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extração de Texto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/styles.css"> <!-- Corrigido o caminho para o CSS -->
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- Adicione jsPDF aqui -->
 </head>
 <body>
     <header class="text-center">
@@ -15,18 +16,20 @@
         <h2>Upload de PDF</h2>
         <input type="file" id="pdfUpload" class="form-control-file" accept=".pdf">
         <button id="uploadPdfBtn" class="btn btn-primary mt-2">Enviar PDF</button>
-
+        
         <h2 class="mt-4">Upload de Imagem</h2>
         <input type="file" id="imageUpload" class="form-control-file" accept="image/*">
         <button id="uploadImageBtn" class="btn btn-primary mt-2">Enviar Imagem</button>
-
+        
+        <div id="loader" class="loader" style="display:none;"></div> <!-- Loader adicionado -->
+        
         <div id="resultado" class="mt-4"></div>
     </div>
-
+    
     <footer class="text-center mt-4">
         <p>&copy; 2024 Higor</p>
     </footer>
-
+    
     <script>
         document.getElementById('uploadPdfBtn').addEventListener('click', async () => {
             const fileInput = document.getElementById('pdfUpload');
@@ -35,16 +38,24 @@
                 alert("Por favor, selecione um arquivo PDF.");
                 return;
             }
-
+            
             const formData = new FormData();
             formData.append("file", file);
-
-            const response = await fetch('http://127.0.0.1:8000/extract_pdf/', { // URL completa
+            
+            // Mostra o loader
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            
+            const response = await fetch('http://127.0.0.1:8000/extract_pdf/', {
                 method: 'POST',
                 body: formData
             });
+            
             const data = await response.json();
-            displayResult(data);
+            generatePDF(data); // Chama a função para gerar o PDF
+            
+            // Esconde o loader
+            loader.style.display = 'none';
         });
 
         document.getElementById('uploadImageBtn').addEventListener('click', async () => {
@@ -58,19 +69,69 @@
             const formData = new FormData();
             formData.append("file", file);
 
-            const response = await fetch('http://127.0.0.1:8000/extract_image/', { // URL completa
+            // Mostra o loader
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+            
+            const response = await fetch('http://127.0.0.1:8000/extract_image/', {
                 method: 'POST',
                 body: formData
             });
-
+            
             const data = await response.json();
-            displayResult(data);
+            generatePDF(data); // Chama a função para gerar o PDF
+            
+            // Esconde o loader
+            loader.style.display = 'none';
         });
 
-        function displayResult(data) {
-            const resultadoDiv = document.getElementById('resultado');
-            resultadoDiv.innerHTML = `<h3>Texto Extraído:</h3><pre>${data.extracted_text}</pre>
-                                      <h3>Resumo:</h3><pre>${data.summary}</pre>`;
+        function generatePDF(data) {
+            // Importa a função jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Definindo variáveis para a posição inicial
+            let y = 10; // Posição Y inicial
+            const lineHeight = 10; // Altura da linha
+            const margin = 10; // Margem
+            const pageWidth = doc.internal.pageSize.getWidth(); // Largura da página
+
+            // Adiciona conteúdo ao PDF
+            doc.text("Texto Extraído:", margin, y);
+            y += lineHeight; // Atualiza a posição Y
+
+            // Adiciona o texto extraído com múltiplas linhas
+            const extractedTextLines = doc.splitTextToSize(data.extracted_text, pageWidth - 2 * margin); // Ajusta a largura do texto
+            extractedTextLines.forEach(line => {
+                doc.text(line, margin, y);
+                y += lineHeight; // Atualiza a posição Y
+                // Verifica se atingiu o final da página
+                if (y > doc.internal.pageSize.getHeight() - margin) {
+                    doc.addPage(); // Adiciona nova página se necessário
+                    y = 10; // Reseta a posição Y
+                }
+            });
+
+            // Adiciona espaço entre seções
+            y += lineHeight;
+
+            doc.text("Resumo:", margin, y);
+            y += lineHeight; // Atualiza a posição Y
+
+            // Adiciona o resumo com múltiplas linhas
+            const summaryLines = doc.splitTextToSize(data.summary, pageWidth - 2 * margin); // Ajusta a largura do texto
+            summaryLines.forEach(line => {
+                doc.text(line, margin, y);
+                y += lineHeight; // Atualiza a posição Y
+                // Verifica se atingiu o final da página
+                if (y > doc.internal.pageSize.getHeight() - margin) {
+                    doc.addPage(); // Adiciona nova página se necessário
+                    y = 10; // Reseta a posição Y
+                }
+            });
+
+            // Salva o PDF
+            doc.save("resultado.pdf");
         }
     </script>
 </body>
