@@ -1,0 +1,59 @@
+/* styles.css */
+
+/* Cor de fundo da página */
+body {
+   background-color: #f8f9fa; /* Um cinza claro para um visual limpo */
+}
+
+/* Estilo do cabeçalho */
+header {
+   background-color: #007bff; /* Azul Bootstrap */
+   padding: 20px;
+   margin-bottom: 20px;
+}
+
+/* Estilo do rodapé */
+footer {
+   background-color: #343a40; /* Um cinza escuro */
+   color: white;
+   position: relative;
+   bottom: 0;
+   width: 100%;
+}
+
+/* Estilo dos formulários */
+.form-control-file {
+   border: 2px solid #007bff; /* Borda azul ao redor do campo de upload */
+   border-radius: 0.25rem; /* Borda arredondada */
+}
+
+.form-control-file:focus {
+   border-color: #0056b3; /* Cor da borda ao focar no campo */
+   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra ao focar */
+}
+
+/* Estilo do botão */
+.btn {
+   transition: background-color 0.3s, color 0.3s; /* Efeito de transição */
+}
+
+.btn:hover {
+   background-color: #0056b3; /* Cor do botão ao passar o mouse */
+   color: white; /* Mudar a cor do texto do botão ao passar o mouse */
+}
+
+/* Resultados */
+#resultado {
+   margin-top: 20px;
+   padding: 20px;
+   background-color: #ffffff; /* Fundo branco para destaque */
+   border: 1px solid #ced4da; /* Borda cinza */
+   border-radius: 0.25rem; /* Bordas arredondadas */
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Títulos dos resultados */
+#resultado h3 {
+   color: #007bff; /* Azul Bootstrap para os títulos */
+}
+

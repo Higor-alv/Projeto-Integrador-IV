@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extração de Texto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Corrigido o caminho para o CSS -->
+</head>
+<body>
+    <header class="text-center">
+        <h1>Extração de Texto de PDF e Imagens</h1>
+    </header>
+    <div class="container">
+        <h2>Upload de PDF</h2>
+        <input type="file" id="pdfUpload" class="form-control-file" accept=".pdf">
+        <button id="uploadPdfBtn" class="btn btn-primary mt-2">Enviar PDF</button>
+
+        <h2 class="mt-4">Upload de Imagem</h2>
+        <input type="file" id="imageUpload" class="form-control-file" accept="image/*">
+        <button id="uploadImageBtn" class="btn btn-primary mt-2">Enviar Imagem</button>
+
+        <div id="resultado" class="mt-4"></div>
+    </div>
+
+    <footer class="text-center mt-4">
+        <p>&copy; 2024 Higor</p>
+    </footer>
+
+    <script>
+        document.getElementById('uploadPdfBtn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('pdfUpload');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Por favor, selecione um arquivo PDF.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch('http://127.0.0.1:8000/extract_pdf/', { // URL completa
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            displayResult(data);
+        });
+
+        document.getElementById('uploadImageBtn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Por favor, selecione uma imagem.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch('http://127.0.0.1:8000/extract_image/', { // URL completa
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            displayResult(data);
+        });
+
+        function displayResult(data) {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `<h3>Texto Extraído:</h3><pre>${data.extracted_text}</pre>
+                                      <h3>Resumo:</h3><pre>${data.summary}</pre>`;
+        }
+    </script>
+</body>
+</html>
