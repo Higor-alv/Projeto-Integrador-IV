@@ -27,14 +27,20 @@ app.include_router(extraction_router)
 
 @app.post("/extract_pdf/")
 async def extract_pdf(file: UploadFile = File(...)):
-    content = await file.read()
-    extracted_text = extract_text_from_pdf(content)
-    summary = summarize_text(extracted_text)
-    return {"extracted_text": extracted_text, "summary": summary}
+    try:
+        content = await file.read()
+        extracted_text = extract_text_from_pdf(content)
+        summary = summarize_text(extracted_text)
+        return {"extracted_text": extracted_text, "summary": summary}
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.post("/extract_image/")
 async def extract_image(file: UploadFile = File(...)):
-    content = await file.read()
-    extracted_text = extract_text_from_image(content)
-    summary = summarize_text(extracted_text)
-    return {"extracted_text": extracted_text, "summary": summary}
+    try:
+        content = await file.read()
+        extracted_text = extract_text_from_image(content)
+        summary = summarize_text(extracted_text)
+        return {"extracted_text": extracted_text, "summary": summary}
+    except Exception as e:
+        return {"error": str(e)}
