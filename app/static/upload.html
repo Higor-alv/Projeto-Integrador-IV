@@ -6,7 +6,7 @@
     <title>Extração de Texto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- Adicione jsPDF aqui -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- jsPDF -->
 </head>
 <body>
     <header class="text-center">
@@ -21,8 +21,7 @@
         <input type="file" id="imageUpload" class="form-control-file" accept="image/*">
         <button id="uploadImageBtn" class="btn btn-primary mt-2">Enviar Imagem</button>
         
-        <div id="loader" class="loader" style="display:none;"></div> <!-- Loader adicionado -->
-        
+        <div id="loader" class="loader" style="display:none;"></div>
         <div id="resultado" class="mt-4"></div>
     </div>
     
@@ -30,109 +29,6 @@
         <p>&copy; 2024 Higor</p>
     </footer>
     
-    <script>
-        document.getElementById('uploadPdfBtn').addEventListener('click', async () => {
-            const fileInput = document.getElementById('pdfUpload');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert("Por favor, selecione um arquivo PDF.");
-                return;
-            }
-            
-            const formData = new FormData();
-            formData.append("file", file);
-            
-            // Mostra o loader
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            
-            const response = await fetch('http://127.0.0.1:8000/extract_pdf/', {
-                method: 'POST',
-                body: formData
-            });
-            
-            const data = await response.json();
-            generatePDF(data); // Chama a função para gerar o PDF
-            
-            // Esconde o loader
-            loader.style.display = 'none';
-        });
-
-        document.getElementById('uploadImageBtn').addEventListener('click', async () => {
-            const fileInput = document.getElementById('imageUpload');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert("Por favor, selecione uma imagem.");
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append("file", file);
-
-            // Mostra o loader
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
-            
-            const response = await fetch('http://127.0.0.1:8000/extract_image/', {
-                method: 'POST',
-                body: formData
-            });
-            
-            const data = await response.json();
-            generatePDF(data); // Chama a função para gerar o PDF
-            
-            // Esconde o loader
-            loader.style.display = 'none';
-        });
-
-        function generatePDF(data) {
-            // Importa a função jsPDF
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            // Definindo variáveis para a posição inicial
-            let y = 10; // Posição Y inicial
-            const lineHeight = 10; // Altura da linha
-            const margin = 10; // Margem
-            const pageWidth = doc.internal.pageSize.getWidth(); // Largura da página
-
-            // Adiciona conteúdo ao PDF
-            doc.text("Texto Extraído:", margin, y);
-            y += lineHeight; // Atualiza a posição Y
-
-            // Adiciona o texto extraído com múltiplas linhas
-            const extractedTextLines = doc.splitTextToSize(data.extracted_text, pageWidth - 2 * margin); // Ajusta a largura do texto
-            extractedTextLines.forEach(line => {
-                doc.text(line, margin, y);
-                y += lineHeight; // Atualiza a posição Y
-                // Verifica se atingiu o final da página
-                if (y > doc.internal.pageSize.getHeight() - margin) {
-                    doc.addPage(); // Adiciona nova página se necessário
-                    y = 10; // Reseta a posição Y
-                }
-            });
-
-            // Adiciona espaço entre seções
-            y += lineHeight;
-
-            doc.text("Resumo:", margin, y);
-            y += lineHeight; // Atualiza a posição Y
-
-            // Adiciona o resumo com múltiplas linhas
-            const summaryLines = doc.splitTextToSize(data.summary, pageWidth - 2 * margin); // Ajusta a largura do texto
-            summaryLines.forEach(line => {
-                doc.text(line, margin, y);
-                y += lineHeight; // Atualiza a posição Y
-                // Verifica se atingiu o final da página
-                if (y > doc.internal.pageSize.getHeight() - margin) {
-                    doc.addPage(); // Adiciona nova página se necessário
-                    y = 10; // Reseta a posição Y
-                }
-            });
-
-            // Salva o PDF
-            doc.save("resultado.pdf");
-        }
-    </script>
+    <script src="static/js/script.js"></script> <!-- Chama o arquivo JS externo -->
 </body>
 </html>

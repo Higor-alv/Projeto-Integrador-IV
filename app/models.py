@@ -4,7 +4,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 class Item(BaseModel):
-    id: int = None  # O ID pode ser opcional na criação
+    id: int = None  
     name: str
     description: str
 
