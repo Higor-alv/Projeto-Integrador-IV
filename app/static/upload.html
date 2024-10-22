@@ -5,30 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extração de Texto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> <!-- jsPDF -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <header class="text-center">
-        <h1>Extração de Texto de PDF e Imagens</h1>
-    </header>
-    <div class="container">
-        <h2>Upload de PDF</h2>
-        <input type="file" id="pdfUpload" class="form-control-file" accept=".pdf">
-        <button id="uploadPdfBtn" class="btn btn-primary mt-2">Enviar PDF</button>
-        
-        <h2 class="mt-4">Upload de Imagem</h2>
-        <input type="file" id="imageUpload" class="form-control-file" accept="image/*">
-        <button id="uploadImageBtn" class="btn btn-primary mt-2">Enviar Imagem</button>
-        
-        <div id="loader" class="loader" style="display:none;"></div>
-        <div id="resultado" class="mt-4"></div>
-    </div>
     
-    <footer class="text-center mt-4">
-        <p>&copy; 2024 Higor</p>
+    <nav class="navbar navbar-expand">
+        <div class="container">
+            <a class="navbar-brand" href="#home">TextExtractor</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer">Contato</a> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main id="home" class="content flex-shrink-0"> 
+        <div class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4 text-white mb-4">Extração de Texto Inteligente</h1>
+                <p class="lead text-white">Envie seus PDFs ou imagens para extrair texto de forma automática e eficiente.</p>
+            </div>
+        </div>
+        <div class="container my-5">
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h2 class="card-title">Upload de PDF</h2>
+                            <div class="form-group">
+                                <input type="file" id="pdfUpload" class="form-control-file">
+                                <button id="uploadPdfBtn" class="btn btn-primary mt-3 w-100">Enviar PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h2 class="card-title">Upload de Imagem</h2>
+                            <div class="form-group">
+                                <input type="file" id="imageUpload" class="form-control-file">
+                                <button id="uploadImageBtn" class="btn btn-primary mt-3 w-100">Enviar Imagem</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loader -->
+            <div id="loader" class="spinner-border text-primary" role="status" style="display: none;">
+                <span class="sr-only">Carregando...</span>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer" class="footer text-white text-center py-3">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Higor | Extração de Texto</p>
+        </div>
     </footer>
-    
-    <script src="static/js/script.js"></script> <!-- Chama o arquivo JS externo -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
