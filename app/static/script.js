@@ -46,6 +46,48 @@ document.getElementById('uploadImageBtn').addEventListener('click', async () => 
     loader.style.display = 'none';
 });
 
+document.getElementById('uploadDocxBtn').addEventListener('click', async () => {
+    const fileInput = document.getElementById('docxUpload');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("Por favor, selecione um arquivo DOCX.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const loader = document.getElementById('loader');
+    loader.style.display = 'block';
+
+    try {
+        const response = await fetch('http://127.0.0.1:8000/extract_docx/', {
+            method: 'POST',
+            body: formData
+        });
+
+        // Checa se a resposta foi bem-sucedida
+        if (!response.ok) {
+            throw new Error('Erro na extração do arquivo DOCX');
+        }
+
+        const data = await response.json();
+
+        // Verifica se a resposta contém os dados necessários
+        if (data.error) {
+            alert(`Erro: ${data.error}`);
+        } else {
+            // Gera o PDF com os dados retornados
+            generatePDF(data);
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Houve um erro ao processar o arquivo.');
+    } finally {
+        loader.style.display = 'none';
+    }
+});
+
 function generatePDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();

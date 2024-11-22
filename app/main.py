@@ -7,6 +7,8 @@ from app.services import extract_text_from_pdf, extract_text_from_image
 from app.services import summarize_text
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.services.extraction_service import extract_text_from_docx
+
 
 app = FastAPI()
 
@@ -41,6 +43,16 @@ async def extract_image(file: UploadFile = File(...)):
         content = await file.read()
         extracted_text = extract_text_from_image(content)
         summary = summarize_text(extracted_text)
+        return {"extracted_text": extracted_text, "summary": summary}
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.post("/extract_docx/")
+async def extract_docx(file: UploadFile = File(...)):
+    try:
+        content = await file.read()  # Ler o conteúdo do arquivo enviado
+        extracted_text = extract_text_from_docx(content)  # Extrair texto
+        summary = summarize_text(extracted_text)  # Resumir texto
         return {"extracted_text": extracted_text, "summary": summary}
     except Exception as e:
         return {"error": str(e)}
