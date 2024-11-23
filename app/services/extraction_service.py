@@ -1,13 +1,12 @@
 import os
+import pandas as pd
 from xml.dom.minidom import Document
 from docx import Document as DocxDocument
-from dotenv import load_dotenv
 import fitz
 import pytesseract
 from PIL import Image
 import io
 
-load_dotenv()
 
 def extract_text_from_pdf(pdf_content: bytes) -> str:
     pdf_document = fitz.open(stream=pdf_content, filetype="pdf")
@@ -46,3 +45,20 @@ def extract_text_from_docx(docx_content: bytes) -> str:
         return "\n".join(text)
     except Exception as e:
         raise Exception(f"Erro ao processar arquivo .docx: {str(e)}")
+
+
+def extract_text_from_txt(txt_content: bytes) -> str:
+    try:
+        return txt_content.decode('utf-8')
+    except Exception as e:
+        raise Exception(f"Erro ao processar arquivo .txt: {str(e)}")
+
+
+
+
+def extract_text_from_csv(csv_content: bytes) -> str:
+    try:
+        df = pd.read_csv(io.BytesIO(csv_content))
+        return df.to_string(index=False)
+    except Exception as e:
+        raise Exception(f"Erro ao processar arquivo .csv: {str(e)}")
