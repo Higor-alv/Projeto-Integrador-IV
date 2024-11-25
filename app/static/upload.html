@@ -27,7 +27,6 @@
             </div>
         </div>
     </nav>
-
     <main id="home" class="content flex-shrink-0">
         <div class="hero-section text-center">
             <div class="container">
@@ -37,11 +36,10 @@
         </div>
         <div class="container my-5">
             <div class="row">
-
                 <div class="col-md d-flex justify-content-center">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h2 class="card-title">Faça Upload de arquivos PDFs, Word, Txt e Csv </h2>
+                            <h2 class="card-title">Faça Upload de arquivos PDFs, Word, Txt e Csv</h2>
                             <div class="form-group">
                                 <input type="file" id="upload" class="form-control-file">
                                 <button id="uploadPdfBtn" class="btn btn-primary mt-3 w-100">Enviar Arquivo</button>
@@ -49,22 +47,23 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
-            <!-- Loader -->
             <div id="loader" class="spinner-border text-primary" role="status" style="display: none;">
                 <span class="sr-only">Carregando...</span>
             </div>
+            <div id="chat" class="mt-5 p-4 rounded shadow-sm" style="display: none; background-color: #f8f9fa;">
+                <div id="chatOutput" class="mb-3"></div>
+                <input id="chatInput" class="form-control" type="text" placeholder="Digite sua pergunta">
+                <button id="sendBtn" class="btn btn-primary mt-2 w-100">Enviar</button>
+                <button id="downloadPdfBtn" class="btn btn-secondary mt-2 w-100">Baixar Resumo em PDF</button>
+            </div>
         </div>
     </main>
-
     <footer id="footer" class="footer text-white text-center py-3">
         <div class="container">
             <p class="mb-0">&copy; 2024 FAESA | Extração de Texto</p>
         </div>
     </footer>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

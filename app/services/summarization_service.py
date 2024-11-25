@@ -4,11 +4,10 @@ import re
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 def clean_text(text: str) -> str:
-    # Remover quebras de linha, links e padrões indesejados
     text = text.replace("\r", " ").replace("\n", " ").replace("\\", "")
     text = re.sub(r'http\S+|www\S+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', '', text)
-    text = re.sub(r'\d+', '', text)  # Remover números (caso não sejam relevantes)
-    text = re.sub(r'[^\w\s]', '', text)  # Remover pontuação excessiva
+    text = re.sub(r'\d+', '', text)
+    text = re.sub(r'[^\w\s]', '', text)
     return text
 
 def split_text_into_chunks(text: str, max_length: int) -> list:

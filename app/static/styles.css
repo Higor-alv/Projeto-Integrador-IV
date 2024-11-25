@@ -6,33 +6,27 @@ body {
    min-height: 100vh;
    color: #333;
 }
-
 main {
    flex: 1;
    padding-bottom: 40px;
    background-color: #222831;
 }
-
-
 .navbar {
    background-color: #222831;
    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
    font-weight: 500;
 }
-
 .navbar-brand {
    font-size: 1.75rem;
    font-weight: 700;
    color: #EEEEEE;
 }
-
 .navbar-nav .nav-link {
    color: #EEEEEE !important;
    margin-right: 20px;
    font-size: 1rem;
    font-weight: 500;
 }
-
 .hero-section {
    background-size: cover;
    background-position: center;
@@ -40,24 +34,20 @@ main {
    color: #EEEEEE;
    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
-
 .hero-section h1 {
    font-size: 3rem;
    font-weight: 900;
    margin-bottom: 20px;
 }
-
 .hero-section p {
    font-size: 1.3rem;
    font-weight: 300;
    max-width: 600px;
    margin: 0 auto;
 }
-
 .container {
    max-width: 960px;
 }
-
 .card {
    border: none;
    border-radius: 15px;
@@ -65,21 +55,10 @@ main {
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
    transition: all 0.3s ease;
 }
-
 .card:hover {
    transform: translateY(-8px);
    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
-
-.card-title {
-   font-size: 1.6rem;
-   font-weight: 700;
-}
-
-.card-body {
-   padding: 40px;
-}
-
 input[type="file"] {
    border: 2px solid #4A90E2;
    border-radius: 8px;
@@ -88,11 +67,9 @@ input[type="file"] {
    width: 100%;
    margin-bottom: 20px;
 }
-
 input[type="file"]:hover {
    border-color: #3a7cc1;
 }
-
 button {
    background-color: #4A90E2;
    border: none;
@@ -102,28 +79,17 @@ button {
    color: white;
    transition: background-color 0.3s;
 }
-
 button:hover {
    background-color: #357ABD;
    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
-#loader {
-   width: 60px;
-   height: 60px;
+#chat {
+   max-width: 600px;
+   margin: 0 auto;
+   display: block;
+   padding: 15px;
+   border: 1px solid #ddd;
+   border-radius: 8px;
+   background-color: #f8f9fa;
 }
 
-.footer {
-   background-color: #222831;
-   color: white;
-   padding: 20px 0;
-   text-align: center;
-   position: relative;
-   bottom: 0;
-   width: 100%;
-   font-size: 1rem;
-}
-
-.footer p {
-   margin-bottom: 0;
-   color: #EEEEEE;
-}
