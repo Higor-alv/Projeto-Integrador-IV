@@ -40,7 +40,7 @@ async def extract_and_summarize(file: UploadFile = File(...)):
 
 @router.post("/qa/", response_model=QAResponse)
 async def question_answer(request: Request):
-    body = await request.json()  # Lê os dados JSON do corpo da requisição
+    body = await request.json() 
     context = body.get('context')
     question = body.get('question')
 
